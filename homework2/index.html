@@ -11,13 +11,29 @@
         color: #000000;
         text-decoration: none;
     }
+    .slider {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+    .slider-navigation {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .slider-list-links {
+        padding: 0px 10px;
+    }
 </style>
 <body>
     <div class="slider">
         <img class="slider-img" src="" alt="">
-        <button class="slider-previous-img">Предыдущее изображение</button>
-        <button class="slider-follow-img">Следующее изображение</button>
-        <ul class="slider-list-links"></ul>
+        <nav class="slider-navigation">
+            <button class="slider-previous-img">Предыдущее изображение</button>
+            <ul class="slider-list-links"></ul>
+            <button class="slider-follow-img">Следующее изображение</button>
+        </nav>        
     </div>
 
     <script>
@@ -30,38 +46,29 @@
         let index = 0;
         sliderImg.src = images[index];
         sliderListLinks.addEventListener('click', function (e) {
-                e.preventDefault();
-                console.log(e.target.href);
-                console.log(e.target);
-                const href = String(e.target.href);
-                console.log(href);
-                const name = String(e.target.name);
-                console.log(name);
-                // sliderImg.src = e.target.href;
-                index = images.indexOf(e.target.name, 0);
-                console.log(index);
-                return sliderImg.src = images[index];
+                if (e.target.tagName === 'A') {                    
+                    e.preventDefault();        
+                    index = images.indexOf(e.target.name, 0);                
+                    return sliderImg.src = images[index];
+                }            
             });  
-        sliderPreviousImg.addEventListener('click', function (e) {
-            console.log(e);
+        sliderPreviousImg.addEventListener('click', function (e) {            
             index--;
             if (index < 0) {
                 index = images.length - 1;
-            }
-            console.log(index);
+            }            
             return sliderImg.src = images[index];
         });
         sliderFollowImg.addEventListener('click', function (e) {
             index++;
             if (index >= images.length) {
                 index = 0;
-            }
-            console.log(index);
+            }            
             return sliderImg.src = images[index];
         });
 
         images.forEach(element => {
-            sliderListLinks.innerHTML += `<a class="slider-link" href="${element}" name="${element}">.</a>`;        
+            sliderListLinks.innerHTML += `<a class="slider-link" href="${element}" name="${element}">&#183;</a>`;        
         });
         
         
