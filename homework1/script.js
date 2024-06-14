@@ -85,7 +85,7 @@ function itemRecords(item, signUp, cancelRecording) {
    `;
 }
 
-/**Функция записи при нажатии на кнопку "Записаться"*/
+/* Функция записи при нажатии на кнопку "Записаться"*/
 function signUp(item, id) {
     const numberCurrentParticipants = item.parentElement.getElementsByClassName("numberCurrentParticipants");
     const maxNumberCurrentParticipants = item.parentElement.getElementsByClassName("maxNumberCurrentParticipants");
@@ -98,7 +98,7 @@ function signUp(item, id) {
     saveLocalStorage(id);
 }
 
-/**Функция отмены записи при нажатии на кнопку "Отменить запись"*/
+/* Функция отмены записи при нажатии на кнопку "Отменить запись"*/
 function cancelRecording(item, id) {
     const numberCurrentParticipants = item.parentElement.getElementsByClassName("numberCurrentParticipants");
     const signUpButton = item.parentElement.getElementsByClassName("sign-up-button");
@@ -111,7 +111,7 @@ function cancelRecording(item, id) {
     removeLocalStorage(item, id);
 }
 
-/**Функция записи в localStorage */
+/* Функция записи в localStorage */
 function saveLocalStorage(id) {
     let record = localStorage.getItem(localStorageKey);
     if (record === null) {
@@ -124,7 +124,7 @@ function saveLocalStorage(id) {
     localStorage.setItem(localStorageKey, record);
 }
 
-/**Функция удаления из localStorage */
+/* Функция удаления из localStorage */
 function removeLocalStorage(item, id) {
     let arr;
     let record = localStorage.getItem(localStorageKey);
