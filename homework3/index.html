@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript про API браузеров (семинары) - Урок 3. Сетевые запросы</title>
+    <style>
+        #photo-container {
+        display: flex;
+        flex-wrap: wrap;
+        }
+        .photo {
+        flex: 1 1 calc(33.33-20px);
+        margin: 10px;
+        border: 1px solid #ccc;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        }
+        .photo img {
+        width: 100%;
+        height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="photo-container"></div>
+    <h2 id="photo-author"></h2>
+    <p id="photo-description"></p>
+    <input type="button" value="Like" id="like-btn"><span id="like-counter"></span>
+    
+    <script>
+        const photoContainer = document.getElementById("photo-container");
+        const photoAuthor = document.getElementById("photo-author");
+        const photoDescription = document.getElementById("photo-description");
+        const likeBtn = document.getElementById("like-btn");
+        const likeCounter = document.getElementById("like-counter");
+        let counter = 0;
+
+        async function fetchPhoto() {
+            try {
+                const response = await fetch(`https://api.unsplash.com/photos/random/?client_id=sSsktdeWTFKSGJaGSEptDEEyjEFYwTNISFkWbcvuzBE`);
+                const photo = await response.json();                
+                return photo;
+            } catch (error) {
+                console.log("Ошибка при загрузке фотографий: ", error);
+                return [];
+            }
+        }
+        
+        async function loadMorePhoto () {
+            const photo = await fetchPhoto();
+            const photoElement = document.createElement('div');
+            photoElement.classList.add('photo');
+            const img = document.createElement('img');
+            img.src = photo.urls.small;
+            img.alt = photo.alt_description;
+            likeCounter.textContent = photo.likes;
+            photoAuthor.textContent = photo.user.name;
+            photoDescription.textContent = img.alt;
+            photoElement.appendChild(img);
+            photoContainer.appendChild(photoElement);
+            likeBtn.addEventListener('click', function (e) {
+                counter++;
+                likeCounter.textContent = photo.likes + counter;
+            });            
+        }
+        loadMorePhoto();
+    </script>
+</body>
+</html>
