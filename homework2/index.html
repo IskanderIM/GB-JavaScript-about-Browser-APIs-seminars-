@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript про API браузеров (семинары) - Урок 2. События, формы</title>
+</head>
+<style>
+    .slider-list-links a {
+        font-size: 50px;
+        color: #000000;
+        text-decoration: none;
+    }
+    .slider {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+    .slider-navigation {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .slider-list-links {
+        padding: 0px 10px;
+    }
+</style>
+<body>
+    <div class="slider">
+        <img class="slider-img" src="" alt="">
+        <nav class="slider-navigation">
+            <button class="slider-previous-img">Предыдущее изображение</button>
+            <ul class="slider-list-links"></ul>
+            <button class="slider-follow-img">Следующее изображение</button>
+        </nav>        
+    </div>
+
+    <script>
+        const images = ['./img/id1.jpg', './img/id2.jpg', './img/id3.jpg', './img/id4.jpg', './img/id5.jpg']
+        const sliderImg = document.querySelector('.slider-img');
+        const sliderPreviousImg = document.querySelector('.slider-previous-img');
+        const sliderFollowImg = document.querySelector('.slider-follow-img');
+        const sliderListLinks = document.querySelector('.slider-list-links');
+
+        let index = 0;
+        sliderImg.src = images[index];
+        sliderListLinks.addEventListener('click', function (e) {
+                if (e.target.tagName === 'A') {                    
+                    e.preventDefault();        
+                    index = images.indexOf(e.target.name, 0);                
+                    return sliderImg.src = images[index];
+                }            
+            });  
+        sliderPreviousImg.addEventListener('click', function (e) {            
+            index--;
+            if (index < 0) {
+                index = images.length - 1;
+            }            
+            return sliderImg.src = images[index];
+        });
+        sliderFollowImg.addEventListener('click', function (e) {
+            index++;
+            if (index >= images.length) {
+                index = 0;
+            }            
+            return sliderImg.src = images[index];
+        });
+
+        images.forEach(element => {
+            sliderListLinks.innerHTML += `<a class="slider-link" href="${element}" name="${element}">&#183;</a>`;        
+        });
+        
+        
+    </script>
+</body>
+</html>
